@@ -13,7 +13,7 @@ public class User_Entity {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(name = "phone-number", nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     public long getId() {

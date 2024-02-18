@@ -1,6 +1,7 @@
 package com.BookSwap.App.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Wishlist_Entity {
@@ -8,10 +9,9 @@ public class Wishlist_Entity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User_Entity user;
     @ManyToMany
-    @JoinColumn(nullable = false)
-    @OrderColumn(name = "list_index")
-    private Book_Entity[] book;
+
+    private Set<Book_Entity> book;
 }

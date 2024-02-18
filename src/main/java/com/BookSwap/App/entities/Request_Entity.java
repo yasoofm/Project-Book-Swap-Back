@@ -5,19 +5,19 @@ import javax.persistence.*;
 @Entity
 public class Request_Entity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender-id", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     private User_Entity sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver-id", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = false)
     private User_Entity receiver;
 
     @ManyToOne
-    @JoinColumn(name = "book-id", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book_Entity book;
 
     public Book_Entity getBook() {

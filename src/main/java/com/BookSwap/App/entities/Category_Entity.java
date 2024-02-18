@@ -2,6 +2,7 @@ package com.BookSwap.App.entities;
 
 import com.BookSwap.App.utils.enums.Category;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Category_Entity {
@@ -9,9 +10,7 @@ public class Category_Entity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToMany
-    @JoinColumn(nullable = false)
-    @OrderColumn(name = "list_index")
-    private Book_Entity[] book;
+    private Set<Book_Entity> book;
 
     private Category category;
 }
