@@ -22,7 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/add-books")
+    @PostMapping("/add-book")
     public ResponseEntity<String> addBook(@RequestBody AddBookRequest addBookRequest) {
         userService.SaveBook(addBookRequest);
         return ResponseEntity.ok("Book Added Successfully");

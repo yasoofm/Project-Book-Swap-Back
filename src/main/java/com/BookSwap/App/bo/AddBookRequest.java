@@ -2,7 +2,7 @@ package com.BookSwap.App.bo;
 
 public class AddBookRequest {
     private String name;
-    private String ISBN;
+    private long ISBN;
     private String title;
     private String author;
     private String description;
@@ -16,11 +16,11 @@ public class AddBookRequest {
         this.name = name;
     }
 
-    public String getISBN() {
+    public long getISBN() {
         return ISBN;
     }
 
-    public void setISBN(String ISBN) {
+    public void setISBN(long ISBN) {
         this.ISBN = ISBN;
     }
 

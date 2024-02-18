@@ -9,7 +9,5 @@ import java.util.List;
 public interface UserService {
 
     void SaveBook(AddBookRequest addBookRequest);
-      List<Book_Entity> getAllBooks();
-
-
+    List<Book_Entity> getAllBooks();
 }

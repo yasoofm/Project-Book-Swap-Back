@@ -22,7 +22,13 @@ public class UserServiceImplementation implements UserService{
   
     @Override
     public void SaveBook(AddBookRequest addBookRequest) {
-      
+      Book_Entity book = new Book_Entity();
+      book.setAuthor(addBookRequest.getAuthor());
+      book.setCondition(addBookRequest.getCondition());
+      book.setDescription(addBookRequest.getDescription());
+      book.setIsbn(addBookRequest.getISBN());
+      book.setTitle(addBookRequest.getTitle());
+      bookRepository.save(book);
     }
     
 }
