@@ -1,7 +1,6 @@
 package com.BookSwap.App.entities;
 
 import com.BookSwap.App.utils.enums.Category;
-
 import javax.persistence.*;
 
 @Entity
