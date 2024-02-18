@@ -24,14 +24,13 @@ public class UserController {
 
     @PostMapping("/add-books")
     public ResponseEntity<String> addBook(@RequestBody AddBookRequest addBookRequest) {
-
         userService.SaveBook(addBookRequest);
         return ResponseEntity.ok("Book Added Successfully");
-
+    }
     @GetMapping("/all-books")
-    public ResponseEntity<List<Book_Entity>> getAllBooks(){
+    public ResponseEntity<List<Book_Entity>> getAllBooks () {
         List<Book_Entity> books = userService.getAllBooks();
         return ResponseEntity.ok(books);
-
     }
+
 }
