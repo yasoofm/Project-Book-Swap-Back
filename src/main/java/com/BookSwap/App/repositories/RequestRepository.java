@@ -1,9 +1,9 @@
 package com.BookSwap.App.repositories;
 
-import com.BookSwap.App.entities.Book;
+import com.BookSwap.App.entities.Request_Entity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, java.lang.Long> {
+public interface RequestRepository extends JpaRepository<Request_Entity, Long> {
 }
