@@ -1,10 +1,11 @@
 package com.BookSwap.App.controllers;
 
 import com.BookSwap.App.bo.AddBookRequest;
+import com.BookSwap.App.bo.CreateSwapRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.BookSwap.App.entities.Book_Entity;
+import com.BookSwap.App.entities.Book;
 import com.BookSwap.App.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,17 @@ public class UserController {
         userService.SaveBook(addBookRequest);
         return ResponseEntity.ok("Book Added Successfully");
     }
+
     @GetMapping("/all-books")
-    public ResponseEntity<List<Book_Entity>> getAllBooks () {
-        List<Book_Entity> books = userService.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = userService.getAllBooks();
         return ResponseEntity.ok(books);
+    }
+
+    @PostMapping("/swap")
+    public ResponseEntity<String> swapBook(@RequestBody CreateSwapRequest createSwapRequest) {
+        userService.swapBook(createSwapRequest);
+        return ResponseEntity.ok("swap request created");
     }
 
 }
