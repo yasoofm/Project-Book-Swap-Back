@@ -12,6 +12,5 @@ public class Wishlist_Entity {
     @JoinColumn(name = "user_id", nullable = false)
     private User_Entity user;
     @ManyToMany
-
     private Set<Book_Entity> book;
 }

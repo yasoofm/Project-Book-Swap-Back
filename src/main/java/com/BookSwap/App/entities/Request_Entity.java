@@ -1,5 +1,7 @@
 package com.BookSwap.App.entities;
 
+import com.BookSwap.App.utils.enums.Status;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,9 @@ public class Request_Entity {
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book_Entity book;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Book_Entity getBook() {
         return book;
