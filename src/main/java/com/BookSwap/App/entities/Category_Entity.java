@@ -1,7 +1,6 @@
 package com.BookSwap.App.entities;
 
 import com.BookSwap.App.utils.enums.Category;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +10,8 @@ public class Category_Entity {
     private long id;
     @ManyToMany
     @JoinColumn(nullable = false)
-    private Book_Entity book;
+    @OrderColumn(name = "list_index")
+    private Book_Entity[] book;
 
     private Category category;
 }
