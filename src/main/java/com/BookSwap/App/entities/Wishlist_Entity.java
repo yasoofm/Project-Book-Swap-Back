@@ -12,5 +12,6 @@ public class Wishlist_Entity {
     private User_Entity user;
     @ManyToMany
     @JoinColumn(nullable = false)
-    private Book_Entity book;
+    @OrderColumn(name = "list_index")
+    private Book_Entity[] book;
 }
