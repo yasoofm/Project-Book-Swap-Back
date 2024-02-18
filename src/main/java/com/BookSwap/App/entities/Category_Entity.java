@@ -12,5 +12,6 @@ public class Category_Entity {
     @ManyToMany
     private Set<Book_Entity> book;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 }
