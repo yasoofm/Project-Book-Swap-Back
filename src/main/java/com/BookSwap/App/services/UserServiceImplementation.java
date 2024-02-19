@@ -2,6 +2,7 @@ package com.BookSwap.App.services;
 
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.CreateSwapRequest;
+import com.BookSwap.App.bo.UpdateRequestStatus;
 import com.BookSwap.App.entities.Request_Entity;
 import com.BookSwap.App.entities.User_Entity;
 import com.BookSwap.App.repositories.RequestRepository;
@@ -58,6 +59,14 @@ public class UserServiceImplementation implements UserService{
         swapRequest.setReceiver(receiver);
         swapRequest.setBook(book);
         swapRequest.setStatus(Status.PENDING);
+    }
+    @Override
+    public void updateRequestStatus(Long requestID, UpdateRequestStatus updateRequestStatus){
+        Request_Entity requestEntity = requestRepository.findById(requestID)
+                .orElseThrow(() -> new RuntimeException("Request with this id not found: " + requestID));
+        requestEntity.setStatus(Status.valueOf(updateRequestStatus.getStatus()));
+        requestRepository.save(requestEntity);
+
     }
 
 
