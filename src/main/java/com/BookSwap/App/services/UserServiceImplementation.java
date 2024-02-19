@@ -3,14 +3,15 @@ package com.BookSwap.App.services;
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.CreateSwapRequest;
 import com.BookSwap.App.bo.UpdateRequestStatus;
-import com.BookSwap.App.entities.Request_Entity;
-import com.BookSwap.App.entities.User_Entity;
-import com.BookSwap.App.repositories.RequestRepository;
-import com.BookSwap.App.repositories.UserRepository;
+import com.BookSwap.App.entities.*;
+import com.BookSwap.App.repositories.*;
+import com.BookSwap.App.utils.enums.Category;
 import com.BookSwap.App.utils.enums.Status;
 import org.springframework.stereotype.Service;
-import com.BookSwap.App.entities.Book;
-import com.BookSwap.App.repositories.BookRepository;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,15 @@ public class UserServiceImplementation implements UserService{
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
 
-    public UserServiceImplementation(BookRepository bookRepository, RequestRepository requestRepository, UserRepository userRepository) {
+    private final BookCategoryRepository bookCategoryRepository;
+    private final CategoryRepository categoryRepository;
+
+    public UserServiceImplementation(BookRepository bookRepository, RequestRepository requestRepository, UserRepository userRepository, BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
+        this.bookCategoryRepository = bookCategoryRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -68,7 +74,13 @@ public class UserServiceImplementation implements UserService{
         requestRepository.save(requestEntity);
 
     }
+    @Override
+    public List<BookCategoryEntity> getBooksByCategory(Category category) {
+        return bookCategoryRepository.findAll().stream()
+                .filter(categoryEntity -> categoryEntity.getCategoryEntity().getCategory() == category)
+                .collect(Collectors.toList());
+    }
 
 
-    
+
 }
