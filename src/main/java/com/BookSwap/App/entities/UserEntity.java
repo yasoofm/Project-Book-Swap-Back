@@ -1,72 +1,30 @@
 package com.BookSwap.App.entities;
-
 import com.BookSwap.App.utils.enums.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
-public class UserEntity implements UserDetails {
+public class UserEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String username;
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private RoleEntity role;
 
-    public void setUsername(String email) {
-        this.username = email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Map<String, Object> getClaims(){
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("id", id);
-        claims.put("username", username);
-        claims.put("role", role);
-        return claims;
-    }
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public String getEmail() {
+        return email;
     }
 
     public long getId() {
@@ -101,11 +59,11 @@ public class UserEntity implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public Role getRole() {
+    public RoleEntity getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleEntity role) {
         this.role = role;
     }
 }

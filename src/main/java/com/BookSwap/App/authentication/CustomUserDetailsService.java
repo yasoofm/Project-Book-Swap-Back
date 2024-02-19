@@ -15,15 +15,22 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    private UserEntity buildCustomUserDetailsOfUsername(String username) throws NotFoundException {
-        UserEntity user = userRepository.findByUsername(username).orElseThrow();
+    private CustomUserDetails buildCustomUserDetailsOfUsername(String username) throws NotFoundException {
+        UserEntity user = userRepository.findByEmail(username).orElseThrow();
         if(user == null){
             throw new NotFoundException("User not found");
         }
-        return user;
+        CustomUserDetails userDetails = new CustomUserDetails();
+        userDetails.setUsername(user.getEmail());
+        userDetails.setId(user.getId());
+        userDetails.setName(user.getName());
+        userDetails.setPassword(user.getPassword());
+        userDetails.setRole(user.getRole().getTitle().toString());
+        userDetails.setPhoneNumber(user.getPhoneNumber());
+        return userDetails;
     }
     @Override
-    public UserEntity loadUserByUsername(String s) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         try {
             return buildCustomUserDetailsOfUsername(s);
         } catch (NotFoundException e) {

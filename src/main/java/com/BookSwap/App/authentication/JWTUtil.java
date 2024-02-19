@@ -53,7 +53,7 @@ public class JWTUtil {
                 .compact();
     }
 
-    public String generateToken(UserEntity userDetails){
+    public String generateToken(CustomUserDetails userDetails){
         return doGenerateToken(userDetails.getClaims(), userDetails.getUsername());
     }
 }
