@@ -1,6 +1,7 @@
 package com.BookSwap.App.controllers;
 
 import com.BookSwap.App.bo.AddBookRequest;
+import com.BookSwap.App.bo.UpdateRequestStatus;
 import com.BookSwap.App.entities.Request_Entity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,15 @@ public class UserController {
     public ResponseEntity<String> swapBook(@RequestBody CreateSwapRequest createSwapRequest) {
         userService.swapBook(createSwapRequest);
         return ResponseEntity.ok("swap request created");
+    }
+
+    @PutMapping("/update-request-status")
+    public ResponseEntity<String> updateRequestStatus(@RequestParam Long requestID, @RequestBody UpdateRequestStatus updateRequestStatus){
+        try{
+            userService.updateRequestStatus(requestID, updateRequestStatus);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok("Request Status Updated Successfully");
     }
 }
