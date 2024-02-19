@@ -5,8 +5,8 @@ import com.BookSwap.App.authentication.JWTUtil;
 import com.BookSwap.App.bo.auth.AuthenticationResponse;
 import com.BookSwap.App.bo.auth.LoginRequest;
 import com.BookSwap.App.bo.auth.SignupRequest;
-import com.BookSwap.App.entities.Role;
-import com.BookSwap.App.entities.User_Entity;
+import com.BookSwap.App.utils.enums.Role;
+import com.BookSwap.App.entities.UserEntity;
 import com.BookSwap.App.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService{
     }
     @Override
     public void signup(SignupRequest signupRequest) {
-        User_Entity user = new User_Entity();
+        UserEntity user = new UserEntity();
         user.setName(signupRequest.getName());
         user.setUsername(signupRequest.getEmail().toLowerCase());
         user.setPassword(bCryptPasswordEncoder.encode(signupRequest.getPassword()));
@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService{
 
         authentication(username, password);
 
-        User_Entity user = userDetailsService.loadUserByUsername(username);
+        UserEntity user = userDetailsService.loadUserByUsername(username);
         String accessToken = jwtUtil.generateToken(user);
 
         AuthenticationResponse response = new AuthenticationResponse();

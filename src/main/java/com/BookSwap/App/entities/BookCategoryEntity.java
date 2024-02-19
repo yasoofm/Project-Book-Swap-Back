@@ -12,11 +12,11 @@ public class BookCategoryEntity {
 
     @OneToOne
     @JoinColumn(name = "book_id")
-    private Book book;
+    private BookEntity book;
 
     @OneToOne
     @JoinColumn(name = "category_id")
-    private Category_Entity categoryEntity;
+    private CategoryEntity categoryEntity;
 
     public Long getId() {
         return id;
@@ -26,19 +26,19 @@ public class BookCategoryEntity {
         this.id = id;
     }
 
-    public Book getBook() {
+    public BookEntity getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(BookEntity book) {
         this.book = book;
     }
 
-    public Category_Entity getCategoryEntity() {
+    public CategoryEntity getCategoryEntity() {
         return categoryEntity;
     }
 
-    public void setCategoryEntity(Category_Entity categoryEntity) {
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
         this.categoryEntity = categoryEntity;
     }
 }

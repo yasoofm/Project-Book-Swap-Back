@@ -1,5 +1,6 @@
 package com.BookSwap.App.entities;
 
+import com.BookSwap.App.utils.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class User_Entity implements UserDetails {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

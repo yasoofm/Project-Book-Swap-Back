@@ -1,4 +1,4 @@
-package com.BookSwap.App.entities;
+package com.BookSwap.App.utils.enums;
 
 public enum Role {
     USER,

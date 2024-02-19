@@ -1,6 +1,6 @@
 package com.BookSwap.App.authentication;
 
-import com.BookSwap.App.entities.User_Entity;
+import com.BookSwap.App.entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -53,7 +53,7 @@ public class JWTUtil {
                 .compact();
     }
 
-    public String generateToken(User_Entity userDetails){
+    public String generateToken(UserEntity userDetails){
         return doGenerateToken(userDetails.getClaims(), userDetails.getUsername());
     }
 }

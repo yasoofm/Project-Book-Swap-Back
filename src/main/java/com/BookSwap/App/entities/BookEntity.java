@@ -3,7 +3,7 @@ package com.BookSwap.App.entities;
 import javax.persistence.*;
 
 @Entity
-public class Book {
+public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

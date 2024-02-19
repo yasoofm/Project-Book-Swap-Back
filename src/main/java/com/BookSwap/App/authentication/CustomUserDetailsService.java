@@ -1,6 +1,6 @@
 package com.BookSwap.App.authentication;
 
-import com.BookSwap.App.entities.User_Entity;
+import com.BookSwap.App.entities.UserEntity;
 import com.BookSwap.App.repositories.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,15 +15,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    private User_Entity buildCustomUserDetailsOfUsername(String username) throws NotFoundException {
-        User_Entity user = userRepository.findByUsername(username).orElseThrow();
+    private UserEntity buildCustomUserDetailsOfUsername(String username) throws NotFoundException {
+        UserEntity user = userRepository.findByUsername(username).orElseThrow();
         if(user == null){
             throw new NotFoundException("User not found");
         }
         return user;
     }
     @Override
-    public User_Entity loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserEntity loadUserByUsername(String s) throws UsernameNotFoundException {
         try {
             return buildCustomUserDetailsOfUsername(s);
         } catch (NotFoundException e) {

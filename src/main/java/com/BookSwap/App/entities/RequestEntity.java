@@ -5,31 +5,31 @@ import com.BookSwap.App.utils.enums.Status;
 import javax.persistence.*;
 
 @Entity
-public class Request_Entity {
+public class RequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private java.lang.Long id;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private User_Entity sender;
+    private UserEntity sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
-    private User_Entity receiver;
+    private UserEntity receiver;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    private BookEntity book;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Book getBook() {
+    public BookEntity getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(BookEntity book) {
         this.book = book;
     }
 
@@ -41,13 +41,13 @@ public class Request_Entity {
         this.id = id;
     }
 
-    public User_Entity getSender() {
+    public UserEntity getSender() {
         return sender;
     }
 
 
 
-    public User_Entity getReceiver() {
+    public UserEntity getReceiver() {
         return receiver;
     }
 
@@ -65,11 +65,11 @@ public class Request_Entity {
         this.id = id;
     }
 
-    public void setSender(User_Entity sender) {
+    public void setSender(UserEntity sender) {
         this.sender = sender;
     }
 
-    public void setReceiver(User_Entity receiver) {
+    public void setReceiver(UserEntity receiver) {
         this.receiver = receiver;
     }
 }

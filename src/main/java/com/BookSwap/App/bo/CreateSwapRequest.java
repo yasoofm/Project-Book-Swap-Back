@@ -1,7 +1,5 @@
 package com.BookSwap.App.bo;
 
-import com.BookSwap.App.entities.Book;
-
 public class CreateSwapRequest {
     private Long sender;
     private Long receiver;

@@ -5,12 +5,12 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Category_Entity {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToMany
-    private Set<Book> book;
+    private Set<BookEntity> book;
 
     public long getId() {
         return id;
@@ -20,11 +20,11 @@ public class Category_Entity {
         this.id = id;
     }
 
-    public Set<Book> getBook() {
+    public Set<BookEntity> getBook() {
         return book;
     }
 
-    public void setBook(Set<Book> book) {
+    public void setBook(Set<BookEntity> book) {
         this.book = book;
     }
 
