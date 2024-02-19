@@ -4,7 +4,6 @@ import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.entities.Request_Entity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.BookSwap.App.entities.Book_Entity;
 import com.BookSwap.App.bo.CreateSwapRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
