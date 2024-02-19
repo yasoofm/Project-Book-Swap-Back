@@ -8,7 +8,7 @@ import com.BookSwap.App.bo.CreateSwapRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.BookSwap.App.entities.Book;
-import com.BookSwap.App.services.UserService;
+import com.BookSwap.App.services.user.UserService;
 
 import java.util.List;
 

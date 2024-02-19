@@ -1,4 +1,4 @@
-package com.BookSwap.App.services;
+package com.BookSwap.App.services.user;
 
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.CreateSwapRequest;
@@ -6,6 +6,7 @@ import com.BookSwap.App.entities.Request_Entity;
 import com.BookSwap.App.entities.User_Entity;
 import com.BookSwap.App.repositories.RequestRepository;
 import com.BookSwap.App.repositories.UserRepository;
+import com.BookSwap.App.services.user.UserService;
 import com.BookSwap.App.utils.enums.Status;
 import org.springframework.stereotype.Service;
 import com.BookSwap.App.entities.Book;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImplementation implements UserService{
+public class UserServiceImplementation implements UserService {
     private final BookRepository bookRepository;
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
