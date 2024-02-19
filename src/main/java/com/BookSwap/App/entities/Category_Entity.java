@@ -10,7 +10,7 @@ public class Category_Entity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToMany
-    private Set<Book_Entity> book;
+    private Set<Book> book;
 
     @Enumerated(EnumType.STRING)
     private Category category;

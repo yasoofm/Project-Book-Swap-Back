@@ -5,6 +5,10 @@ import com.BookSwap.App.entities.Request_Entity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.BookSwap.App.entities.Book_Entity;
+import com.BookSwap.App.bo.CreateSwapRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.BookSwap.App.entities.Book;
 import com.BookSwap.App.services.UserService;
 
 import java.util.List;
@@ -24,9 +28,10 @@ public class UserController {
         userService.SaveBook(addBookRequest);
         return ResponseEntity.ok("Book Added Successfully");
     }
+
     @GetMapping("/all-books")
-    public ResponseEntity<List<Book_Entity>> getAllBooks () {
-        List<Book_Entity> books = userService.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = userService.getAllBooks();
         return ResponseEntity.ok(books);
     }
 
@@ -34,5 +39,10 @@ public class UserController {
     public ResponseEntity<List<Request_Entity>> getRequests(@RequestParam Long id){
         List<Request_Entity> requests = userService.getAllRequests(id);
         return ResponseEntity.ok(requests);
+    }
+    @PostMapping("/swap")
+    public ResponseEntity<String> swapBook(@RequestBody CreateSwapRequest createSwapRequest) {
+        userService.swapBook(createSwapRequest);
+        return ResponseEntity.ok("swap request created");
     }
 }
