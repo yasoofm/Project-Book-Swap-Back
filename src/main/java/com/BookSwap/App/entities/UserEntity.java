@@ -1,5 +1,4 @@
 package com.BookSwap.App.entities;
-import com.BookSwap.App.utils.enums.Role;
 import javax.persistence.*;
 
 @Entity
