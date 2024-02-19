@@ -1,14 +1,11 @@
 package com.BookSwap.App.controllers;
 
 import com.BookSwap.App.bo.AddBookRequest;
+import com.BookSwap.App.entities.Request_Entity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import com.BookSwap.App.entities.Book_Entity;
 import com.BookSwap.App.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,4 +30,9 @@ public class UserController {
         return ResponseEntity.ok(books);
     }
 
+    @GetMapping("/get-requests")
+    public ResponseEntity<List<Request_Entity>> getRequests(@RequestParam Long id){
+        List<Request_Entity> requests = userService.getAllRequests(id);
+        return ResponseEntity.ok(requests);
+    }
 }
