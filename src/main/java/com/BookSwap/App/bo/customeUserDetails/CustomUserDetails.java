@@ -1,6 +1,5 @@
-package com.BookSwap.App.authentication;
+package com.BookSwap.App.bo.customeUserDetails;
 
-import com.BookSwap.App.utils.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomUserDetails implements UserDetails {
+
     private Long id;
     private String name;
     private String username;
@@ -18,18 +18,51 @@ public class CustomUserDetails implements UserDetails {
     private String phoneNumber;
     private String role;
 
-    public Map<String, Object> getClaims(){
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("id", id);
-        claims.put("username", username);
-        claims.put("role", role);
-        return claims;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));
     }
+
     @Override
     public String getPassword() {
         return password;
@@ -60,43 +93,14 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Map<String, Object> getClaims(){
+        HashMap<String, Object> claims = new HashMap<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+        claims.put("id",this.id);
+        claims.put("userName", this.username);
+        claims.put("role", role);
+        claims.put("phoneNumber", this.phoneNumber);
+        claims.put("name",this.name);
+        return claims;
     }
 }

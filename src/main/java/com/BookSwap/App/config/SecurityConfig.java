@@ -1,7 +1,9 @@
-package com.BookSwap.App.authentication;
+package com.BookSwap.App.config;
 
+import com.BookSwap.App.services.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,28 +18,29 @@ import java.util.Collections;
 import java.util.List;
 
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    public static final String AUTH_PATH = "/api/v1/auth/**";
+
+    public static final String AUTH_PATH= "/api/v1/auth/**";
+
     public static final String USER_PATH = "/api/v1/user/**";
 
+
+    public static final String GUST_PATH = "/api/v1/guest/**";
+
+    public static final String ADMIN_PATH= "/api/v1/admin-dashboard/**";
     private static final List<String> ALLOWED_METHODS = Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH");
-    private static final List<String> ALLOWED_HEADERS = Arrays.asList("x-request-with", "Content-Type", "Authorization", "credential", "X-XSRF-TOKEN", "X-Refresh-Token", "X-Client-Id", "x-client-id");
+    private static final List<String> ALLOWED_HEADERS = Arrays.asList("x-requested-with", "authorization", "Content-Type",
+            "Authorization", "credential", "X-XSRF-TOKEN", "X-Refresh-Token", "X-Client-Id", "x-client-id");
 
     @Autowired
-    private JWTUtil jwtUtill;
+    private JWTUtil jwtUtil;
+
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    private CorsConfiguration getCorsConfiguration(){
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
-        corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
-        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
-        corsConfiguration.setAllowCredentials(true);
-        return corsConfiguration;
-    }
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .exceptionHandling()
                 .and()
@@ -50,14 +53,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_PATH).permitAll()
+                .antMatchers(GUST_PATH).permitAll()
                 .antMatchers(USER_PATH).hasAuthority("user")
+                .antMatchers(ADMIN_PATH).hasAuthority("admin")
                 .anyRequest().authenticated();
-        http.addFilterBefore(new JWTAuthFilter(jwtUtill, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTAuthFilter(jwtUtil,userDetailsService), UsernamePasswordAuthenticationFilter.class);
+
     }
 
-    @Override
+    private CorsConfiguration getCorsConfiguration(){
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
+        corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
+        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        corsConfiguration.setAllowCredentials(true);
+
+        return corsConfiguration;
+    }
+
     @Bean
-    protected AuthenticationManager authenticationManager() throws Exception{
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
@@ -66,3 +82,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
+
+

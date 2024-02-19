@@ -1,10 +1,11 @@
-package com.BookSwap.App.authentication;
+package com.BookSwap.App.config;
 
+import com.BookSwap.App.services.auth.CustomUserDetailsService;
+import com.BookSwap.App.utils.excption.UserNotFoundException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,14 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.BookSwap.App.authentication.SecurityConfig.AUTH_PATH;
+import static com.BookSwap.App.config.SecurityConfig.AUTH_PATH;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Configuration
 public class JWTAuthFilter extends OncePerRequestFilter {
 
-    private static final String BEARER = "BEARER ";
+    private static final String BEARER = "Bearer ";
+
     private final JWTUtil jwtUtil;
+
     private final CustomUserDetailsService userDetailsService;
 
     public JWTAuthFilter(JWTUtil jwtUtil, CustomUserDetailsService userDetailsService) {
@@ -29,21 +32,24 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(!request.getServletPath().equals(AUTH_PATH+"/login") && authorizationHeader != null && authorizationHeader.startsWith(BEARER)){
+        if(!request.getServletPath().equals(AUTH_PATH + "/login") && authorizationHeader != null && authorizationHeader.startsWith(BEARER)){
             String token = authorizationHeader.substring(7);
             if(jwtUtil.isTokenValid(token)){
-                String username = jwtUtil.getUsernameFromToken(token);
-                if(username == null)
-                    throw new UsernameNotFoundException("User not found");
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource());
+                String usernmae = jwtUtil.getUsernameFromToken(token);
+                if (usernmae == null){
+                    throw new UserNotFoundException("user not found");
+                }
+                UserDetails userDetails = userDetailsService.loadUserByUsername(usernmae);
+
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request,response);
     }
 }

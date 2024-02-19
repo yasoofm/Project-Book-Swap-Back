@@ -1,16 +1,15 @@
 package com.BookSwap.App.services.auth;
 
-import com.BookSwap.App.authentication.CustomUserDetails;
-import com.BookSwap.App.authentication.CustomUserDetailsService;
-import com.BookSwap.App.authentication.JWTUtil;
 import com.BookSwap.App.bo.auth.AuthenticationResponse;
 import com.BookSwap.App.bo.auth.LoginRequest;
 import com.BookSwap.App.bo.auth.SignupRequest;
+import com.BookSwap.App.bo.customeUserDetails.CustomUserDetails;
+import com.BookSwap.App.config.JWTUtil;
 import com.BookSwap.App.entities.RoleEntity;
 import com.BookSwap.App.repositories.RoleRepository;
-import com.BookSwap.App.utils.enums.Role;
 import com.BookSwap.App.entities.UserEntity;
 import com.BookSwap.App.repositories.UserRepository;
+import com.BookSwap.App.utils.enums.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

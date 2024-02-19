@@ -1,5 +1,6 @@
-package com.BookSwap.App.authentication;
+package com.BookSwap.App.services.auth;
 
+import com.BookSwap.App.bo.customeUserDetails.CustomUserDetails;
 import com.BookSwap.App.entities.UserEntity;
 import com.BookSwap.App.repositories.UserRepository;
 import javassist.NotFoundException;
