@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import com.BookSwap.App.entities.Book;
 import com.BookSwap.App.repositories.BookRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImplementation implements UserService{
     private final BookRepository bookRepository;
     private final RequestRepository requestRepository;
-
     private final UserRepository userRepository;
 
     public UserServiceImplementation(BookRepository bookRepository, RequestRepository requestRepository, UserRepository userRepository) {
@@ -28,9 +28,14 @@ public class UserServiceImplementation implements UserService{
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
-
     }
 
+    @Override
+    public List<Request_Entity> getAllRequests(Long userId) {
+        return requestRepository.findAll().stream()
+                .filter(request -> request.getSender().getId() == userId)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void SaveBook(AddBookRequest addBookRequest) {
@@ -42,6 +47,7 @@ public class UserServiceImplementation implements UserService{
       book.setTitle(addBookRequest.getTitle());
       bookRepository.save(book);
     }
+  
     @Override
     public void swapBook(CreateSwapRequest createSwapRequest) {
         User_Entity sender = userRepository.findById(createSwapRequest.getSender()).orElseThrow();
