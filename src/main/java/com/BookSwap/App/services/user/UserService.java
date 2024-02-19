@@ -1,4 +1,4 @@
-package com.BookSwap.App.services;
+package com.BookSwap.App.services.user;
 
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.UpdateRequestStatus;
