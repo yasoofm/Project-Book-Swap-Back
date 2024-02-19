@@ -1,7 +1,10 @@
 package com.BookSwap.App.controllers;
 
 import com.BookSwap.App.bo.AddBookRequest;
+import com.BookSwap.App.bo.UpdateRequestStatus;
+import com.BookSwap.App.entities.BookCategoryEntity;
 import com.BookSwap.App.entities.Request_Entity;
+import com.BookSwap.App.utils.enums.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.BookSwap.App.bo.CreateSwapRequest;
@@ -35,13 +38,31 @@ public class UserController {
     }
 
     @GetMapping("/get-requests")
-    public ResponseEntity<List<Request_Entity>> getRequests(@RequestParam Long id){
+    public ResponseEntity<List<Request_Entity>> getRequests(@RequestParam Long id) {
         List<Request_Entity> requests = userService.getAllRequests(id);
         return ResponseEntity.ok(requests);
     }
+
     @PostMapping("/swap")
     public ResponseEntity<String> swapBook(@RequestBody CreateSwapRequest createSwapRequest) {
         userService.swapBook(createSwapRequest);
         return ResponseEntity.ok("swap request created");
+    }
+
+    @PutMapping("/update-request-status")
+    public ResponseEntity<String> updateRequestStatus(@RequestParam Long requestID, @RequestBody UpdateRequestStatus updateRequestStatus) {
+        try {
+            userService.updateRequestStatus(requestID, updateRequestStatus);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok("Request Status Updated Successfully");
+    }
+
+    @GetMapping("/filter-by-category")
+    public ResponseEntity<List<BookCategoryEntity>> getBooksByCategory(@RequestParam Category category) {
+        List<BookCategoryEntity> books = userService.getBooksByCategory(category);
+        return ResponseEntity.ok().body(books);
+
     }
 }
