@@ -85,7 +85,7 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public List<BookEntity> getBooksByCategory(String category) {
-        return bookRepository.findBooksByCategory(category).orElseThrow();
+        return bookRepository.findBooksByCategory(categoryRepository.findByCategory(Category.valueOf(category)).getId()).orElseThrow();
     }
 
 }

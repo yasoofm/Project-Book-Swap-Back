@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
-    @Query(value = "SELECT * FROM category_entity r where r.category = :category",nativeQuery = true)
-    Optional<List<BookEntity>> findBooksByCategory(String category);
+    @Query(value = "SELECT * FROM Book_Entity r where r.category_id = :categoryId",nativeQuery = true)
+    Optional<List<BookEntity>> findBooksByCategory(Long categoryId);
 }
