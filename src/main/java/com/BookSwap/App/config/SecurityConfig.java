@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String USER_PATH = "/api/v1/user/**";
 
-
     public static final String GUST_PATH = "/api/v1/guest/**";
 
     public static final String ADMIN_PATH= "/api/v1/admin-dashboard/**";

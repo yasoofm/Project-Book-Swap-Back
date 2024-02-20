@@ -7,6 +7,15 @@ public class AddBookRequest {
     private String author;
     private String description;
     private String condition;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getName() {
         return name;

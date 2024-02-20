@@ -1,18 +1,9 @@
 package com.BookSwap.App.bo;
 
 public class CreateSwapRequest {
-    private Long sender;
+
     private Long receiver;
     private Long book;
-
-
-    public Long getSender() {
-        return sender;
-    }
-
-    public void setSender(Long sender) {
-        this.sender = sender;
-    }
 
     public Long getReceiver() {
         return receiver;

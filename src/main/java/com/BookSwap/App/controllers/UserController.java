@@ -2,8 +2,10 @@ package com.BookSwap.App.controllers;
 
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.UpdateRequestStatus;
+import com.BookSwap.App.config.JWTUtil;
 import com.BookSwap.App.entities.BookCategoryEntity;
 import com.BookSwap.App.entities.RequestEntity;
+import com.BookSwap.App.utils.UserDetailsUtil;
 import com.BookSwap.App.utils.enums.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JWTUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/add-book")
@@ -31,21 +35,27 @@ public class UserController {
         return ResponseEntity.ok("Book Added Successfully");
     }
 
-    @GetMapping("/all-books")
+    @GetMapping("/get-books")
     public ResponseEntity<List<BookEntity>> getAllBooks() {
         List<BookEntity> books = userService.getAllBooks();
         return ResponseEntity.ok(books);
     }
 
-    @GetMapping("/get-requests")
-    public ResponseEntity<List<RequestEntity>> getRequests(@RequestParam Long id) {
-        List<RequestEntity> requests = userService.getAllRequests(id);
+    @GetMapping("/get-sent-requests")
+    public ResponseEntity<List<RequestEntity>> getSentRequests() {
+        List<RequestEntity> requests = userService.getSentRequests(UserDetailsUtil.userDetails().getId());
+        return ResponseEntity.ok(requests);
+    }
+
+    @GetMapping("/get-received-requests")
+    public ResponseEntity<List<RequestEntity>> getReceivedRequests() {
+        List<RequestEntity> requests = userService.getReceivedRequests(UserDetailsUtil.userDetails().getId());
         return ResponseEntity.ok(requests);
     }
 
     @PostMapping("/swap")
     public ResponseEntity<String> swapBook(@RequestBody CreateSwapRequest createSwapRequest) {
-        userService.swapBook(createSwapRequest);
+        userService.swapBook(createSwapRequest, UserDetailsUtil.userDetails().getId());
         return ResponseEntity.ok("swap request created");
     }
 
@@ -60,9 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/filter-by-category")
-    public ResponseEntity<List<BookCategoryEntity>> getBooksByCategory(@RequestParam Category category) {
-        List<BookCategoryEntity> books = userService.getBooksByCategory(category);
+    public ResponseEntity<List<BookEntity>> getBooksByCategory(@RequestParam String category) {
+        List<BookEntity> books = userService.getBooksByCategory(category);
         return ResponseEntity.ok().body(books);
-
     }
 }

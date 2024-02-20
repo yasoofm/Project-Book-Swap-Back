@@ -16,10 +16,11 @@ public interface UserService {
 
     void SaveBook(AddBookRequest addBookRequest);
     List<BookEntity> getAllBooks();
-    List<RequestEntity> getAllRequests(Long userId);
-    void swapBook(CreateSwapRequest createSwapRequest);
+    List<RequestEntity> getSentRequests(Long userId);
+    List<RequestEntity> getReceivedRequests(Long userId);
+    void swapBook(CreateSwapRequest createSwapRequest, Long id);
 
     void updateRequestStatus(Long requestID, UpdateRequestStatus updateRequestStatus);
-    List<BookCategoryEntity> getBooksByCategory(Category category);
+    List<BookEntity> getBooksByCategory(String category);
 
 }

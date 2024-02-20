@@ -1,5 +1,7 @@
 package com.BookSwap.App.entities;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,19 @@ public class BookEntity {
     private String author;
     @Column(nullable = false)
     private String condition;
+
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    private BookCategoryEntity bookCategoryEntity;
+
+    public BookCategoryEntity getBookCategoryEntity() {
+        return bookCategoryEntity;
+    }
+
+    public void setBookCategoryEntity(BookCategoryEntity bookCategoryEntity) {
+        this.bookCategoryEntity = bookCategoryEntity;
+    }
 
     public long getId() {
         return id;

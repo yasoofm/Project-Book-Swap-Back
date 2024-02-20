@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class RequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private java.lang.Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
@@ -33,11 +33,11 @@ public class RequestEntity {
         this.book = book;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,13 +45,9 @@ public class RequestEntity {
         return sender;
     }
 
-
-
     public UserEntity getReceiver() {
         return receiver;
     }
-
-
 
     public Status getStatus() {
         return status;
@@ -59,10 +55,6 @@ public class RequestEntity {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public void setId(java.lang.Long id) {
-        this.id = id;
     }
 
     public void setSender(UserEntity sender) {

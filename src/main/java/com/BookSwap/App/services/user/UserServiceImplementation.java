@@ -12,6 +12,7 @@ import com.BookSwap.App.utils.enums.Category;
 import com.BookSwap.App.utils.enums.Status;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +39,20 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<RequestEntity> getAllRequests(Long userId) {
+    public List<RequestEntity> getSentRequests(Long userId) {
         return requestRepository.findAll().stream()
                 .filter(request -> request.getSender().getId() == userId)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<RequestEntity> getReceivedRequests(Long userId) {
+        return requestRepository.findAll().stream()
+                .filter(request -> request.getReceiver().getId() == userId)
+                .collect(Collectors.toList());
+    }
 
     @Override
+    @Transactional
     public void SaveBook(AddBookRequest addBookRequest) {
       BookEntity book = new BookEntity();
       book.setAuthor(addBookRequest.getAuthor());
@@ -52,12 +60,20 @@ public class UserServiceImplementation implements UserService {
       book.setDescription(addBookRequest.getDescription());
       book.setIsbn(addBookRequest.getISBN());
       book.setTitle(addBookRequest.getTitle());
+
+      BookCategoryEntity bookCategoryEntity = new BookCategoryEntity();
+      bookCategoryEntity.setBook(book);
+      bookCategoryEntity.setCategoryEntity(categoryRepository.findByCategory(Category.valueOf(addBookRequest.getCategory())));
+
+      book.setBookCategoryEntity(bookCategoryEntity);
+
       bookRepository.save(book);
+      bookCategoryRepository.save(bookCategoryEntity);
     }
   
     @Override
-    public void swapBook(CreateSwapRequest createSwapRequest) {
-        UserEntity sender = userRepository.findById(createSwapRequest.getSender()).orElseThrow();
+    public void swapBook(CreateSwapRequest createSwapRequest, Long senderId) {
+        UserEntity sender = userRepository.findById(senderId).orElseThrow();
         UserEntity receiver = userRepository.findById(createSwapRequest.getReceiver()).orElseThrow();
         BookEntity book = bookRepository.findById(createSwapRequest.getBook()).orElseThrow();
         RequestEntity swapRequest = new RequestEntity();
@@ -65,6 +81,7 @@ public class UserServiceImplementation implements UserService {
         swapRequest.setReceiver(receiver);
         swapRequest.setBook(book);
         swapRequest.setStatus(Status.PENDING);
+        requestRepository.save(swapRequest);
     }
     @Override
     public void updateRequestStatus(Long requestID, UpdateRequestStatus updateRequestStatus){
@@ -72,15 +89,13 @@ public class UserServiceImplementation implements UserService {
                 .orElseThrow(() -> new RuntimeException("Request with this id not found: " + requestID));
         requestEntity.setStatus(Status.valueOf(updateRequestStatus.getStatus()));
         requestRepository.save(requestEntity);
-
     }
     @Override
-    public List<BookCategoryEntity> getBooksByCategory(Category category) {
+    public List<BookEntity> getBooksByCategory(String category) {
         return bookCategoryRepository.findAll().stream()
-                .filter(categoryEntity -> categoryEntity.getCategoryEntity().getCategory() == category)
+                .filter(categoryEntity -> categoryEntity.getCategoryEntity().getCategory().name().equals(category))
+                .map(BookCategoryEntity::getBook)
                 .collect(Collectors.toList());
     }
-
-
 
 }
