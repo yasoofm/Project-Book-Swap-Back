@@ -6,7 +6,7 @@ import java.util.Set;
 @Entity
 public class WishlistEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

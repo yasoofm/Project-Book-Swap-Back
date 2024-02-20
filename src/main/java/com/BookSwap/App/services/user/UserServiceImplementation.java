@@ -4,7 +4,7 @@ import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.CreateSwapRequest;
 import com.BookSwap.App.bo.UpdateRequestStatus;
 import com.BookSwap.App.entities.BookEntity;
-import com.BookSwap.App.entities.BookCategoryEntity;
+import com.BookSwap.App.entities.CategoryEntity;
 import com.BookSwap.App.entities.RequestEntity;
 import com.BookSwap.App.entities.UserEntity;
 import com.BookSwap.App.repositories.*;
@@ -12,8 +12,8 @@ import com.BookSwap.App.utils.enums.Category;
 import com.BookSwap.App.utils.enums.Status;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,14 +22,12 @@ public class UserServiceImplementation implements UserService {
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
 
-    private final BookCategoryRepository bookCategoryRepository;
     private final CategoryRepository categoryRepository;
 
-    public UserServiceImplementation(BookRepository bookRepository, RequestRepository requestRepository, UserRepository userRepository, BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository) {
+    public UserServiceImplementation(BookRepository bookRepository, RequestRepository requestRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
-        this.bookCategoryRepository = bookCategoryRepository;
         this.categoryRepository = categoryRepository;
     }
 
@@ -52,7 +50,6 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    @Transactional
     public void SaveBook(AddBookRequest addBookRequest) {
       BookEntity book = new BookEntity();
       book.setAuthor(addBookRequest.getAuthor());
@@ -61,14 +58,10 @@ public class UserServiceImplementation implements UserService {
       book.setIsbn(addBookRequest.getISBN());
       book.setTitle(addBookRequest.getTitle());
 
-      BookCategoryEntity bookCategoryEntity = new BookCategoryEntity();
-      bookCategoryEntity.setBook(book);
-      bookCategoryEntity.setCategoryEntity(categoryRepository.findByCategory(Category.valueOf(addBookRequest.getCategory())));
-
-      book.setBookCategoryEntity(bookCategoryEntity);
-
+        CategoryEntity categoryEntity=categoryRepository.
+                findByCategory(Category.valueOf(addBookRequest.getCategory()));
+        book.setCategoryEntity(categoryEntity);
       bookRepository.save(book);
-      bookCategoryRepository.save(bookCategoryEntity);
     }
   
     @Override
@@ -92,10 +85,7 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public List<BookEntity> getBooksByCategory(String category) {
-        return bookCategoryRepository.findAll().stream()
-                .filter(categoryEntity -> categoryEntity.getCategoryEntity().getCategory().name().equals(category))
-                .map(BookCategoryEntity::getBook)
-                .collect(Collectors.toList());
+        return bookRepository.findBooksByCategory(category).orElseThrow();
     }
 
 }

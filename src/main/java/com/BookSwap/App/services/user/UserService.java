@@ -2,14 +2,12 @@ package com.BookSwap.App.services.user;
 
 import com.BookSwap.App.bo.AddBookRequest;
 import com.BookSwap.App.bo.UpdateRequestStatus;
-import com.BookSwap.App.entities.BookCategoryEntity;
 import com.BookSwap.App.entities.RequestEntity;
 import com.BookSwap.App.bo.CreateSwapRequest;
 import com.BookSwap.App.entities.BookEntity;
-import com.BookSwap.App.utils.enums.Category;
 
 import java.util.List;
-
+import java.util.Optional;
 
 
 public interface UserService {

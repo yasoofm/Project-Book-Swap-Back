@@ -1,13 +1,11 @@
 package com.BookSwap.App.entities;
 
-import net.minidev.json.annotate.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
 public class BookEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "ISBN", nullable = false)
     private long isbn;
@@ -20,17 +18,16 @@ public class BookEntity {
     @Column(nullable = false)
     private String condition;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
-    private BookCategoryEntity bookCategoryEntity;
+    private CategoryEntity categoryEntity;
 
-    public BookCategoryEntity getBookCategoryEntity() {
-        return bookCategoryEntity;
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
     }
 
-    public void setBookCategoryEntity(BookCategoryEntity bookCategoryEntity) {
-        this.bookCategoryEntity = bookCategoryEntity;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
     public long getId() {
