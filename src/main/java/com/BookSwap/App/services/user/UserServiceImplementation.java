@@ -87,5 +87,4 @@ public class UserServiceImplementation implements UserService {
     public List<BookEntity> getBooksByCategory(String category) {
         return bookRepository.findBooksByCategory(categoryRepository.findByCategory(Category.valueOf(category)).getId()).orElseThrow();
     }
-
 }

@@ -25,8 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String USER_PATH = "/api/v1/user/**";
 
-    public static final String GUST_PATH = "/api/v1/guest/**";
-
     public static final String ADMIN_PATH= "/api/v1/admin-dashboard/**";
     private static final List<String> ALLOWED_METHODS = Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH");
     private static final List<String> ALLOWED_HEADERS = Arrays.asList("x-requested-with", "authorization", "Content-Type",
@@ -52,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_PATH).permitAll()
-                .antMatchers(GUST_PATH).permitAll()
                 .antMatchers(USER_PATH).hasAuthority("user")
                 .antMatchers(ADMIN_PATH).hasAuthority("admin")
+                .antMatchers("/swagger-ui/", "/v3/api-docs/", "/swagger-resources/", "/configuration/", "/webjars/**").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(new JWTAuthFilter(jwtUtil,userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
