@@ -1,18 +1,17 @@
 package com.BookSwap.App.services.user;
 
-import com.BookSwap.App.bo.AddBookRequest;
-import com.BookSwap.App.bo.UpdateRequestStatus;
+import com.BookSwap.App.bo.bookrequest.CreateBookRequest;
+import com.BookSwap.App.bo.bookrequest.UpdateRequestStatus;
 import com.BookSwap.App.entities.RequestEntity;
-import com.BookSwap.App.bo.CreateSwapRequest;
+import com.BookSwap.App.bo.bookswap.CreateSwapRequest;
 import com.BookSwap.App.entities.BookEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface UserService {
 
-    void SaveBook(AddBookRequest addBookRequest);
+    void SaveBook(CreateBookRequest createBookRequest);
     List<BookEntity> getAllBooks();
     List<RequestEntity> getSentRequests(Long userId);
     List<RequestEntity> getReceivedRequests(Long userId);

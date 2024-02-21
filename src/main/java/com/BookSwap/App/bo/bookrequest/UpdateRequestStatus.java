@@ -1,4 +1,4 @@
-package com.BookSwap.App.bo;
+package com.BookSwap.App.bo.bookrequest;
 
 public class UpdateRequestStatus {
     private String status;

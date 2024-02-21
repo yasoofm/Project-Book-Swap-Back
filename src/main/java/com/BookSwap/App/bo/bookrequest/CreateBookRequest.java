@@ -1,6 +1,6 @@
-package com.BookSwap.App.bo;
+package com.BookSwap.App.bo.bookrequest;
 
-public class AddBookRequest {
+public class CreateBookRequest {
     private String name;
     private long ISBN;
     private String title;

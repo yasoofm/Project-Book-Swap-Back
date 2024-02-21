@@ -1,8 +1,8 @@
 package com.BookSwap.App.services.user;
 
-import com.BookSwap.App.bo.AddBookRequest;
-import com.BookSwap.App.bo.CreateSwapRequest;
-import com.BookSwap.App.bo.UpdateRequestStatus;
+import com.BookSwap.App.bo.bookrequest.CreateBookRequest;
+import com.BookSwap.App.bo.bookswap.CreateSwapRequest;
+import com.BookSwap.App.bo.bookrequest.UpdateRequestStatus;
 import com.BookSwap.App.entities.BookEntity;
 import com.BookSwap.App.entities.CategoryEntity;
 import com.BookSwap.App.entities.RequestEntity;
@@ -13,7 +13,6 @@ import com.BookSwap.App.utils.enums.Status;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,16 +49,16 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void SaveBook(AddBookRequest addBookRequest) {
+    public void SaveBook(CreateBookRequest createBookRequest) {
       BookEntity book = new BookEntity();
-      book.setAuthor(addBookRequest.getAuthor());
-      book.setCondition(addBookRequest.getCondition());
-      book.setDescription(addBookRequest.getDescription());
-      book.setIsbn(addBookRequest.getISBN());
-      book.setTitle(addBookRequest.getTitle());
+      book.setAuthor(createBookRequest.getAuthor());
+      book.setCondition(createBookRequest.getCondition());
+      book.setDescription(createBookRequest.getDescription());
+      book.setIsbn(createBookRequest.getISBN());
+      book.setTitle(createBookRequest.getTitle());
 
         CategoryEntity categoryEntity=categoryRepository.
-                findByCategory(Category.valueOf(addBookRequest.getCategory()));
+                findByCategory(Category.valueOf(createBookRequest.getCategory()));
         book.setCategoryEntity(categoryEntity);
       bookRepository.save(book);
     }

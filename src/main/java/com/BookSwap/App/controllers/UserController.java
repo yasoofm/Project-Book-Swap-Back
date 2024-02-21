@@ -1,13 +1,13 @@
 package com.BookSwap.App.controllers;
 
-import com.BookSwap.App.bo.AddBookRequest;
-import com.BookSwap.App.bo.UpdateRequestStatus;
+import com.BookSwap.App.bo.bookrequest.CreateBookRequest;
+import com.BookSwap.App.bo.bookrequest.UpdateRequestStatus;
 import com.BookSwap.App.config.JWTUtil;
 import com.BookSwap.App.entities.RequestEntity;
 import com.BookSwap.App.utils.UserDetailsUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.BookSwap.App.bo.CreateSwapRequest;
+import com.BookSwap.App.bo.bookswap.CreateSwapRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.BookSwap.App.entities.BookEntity;
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/add-book")
-    public ResponseEntity<String> addBook(@RequestBody AddBookRequest addBookRequest) {
-        userService.SaveBook(addBookRequest);
+    public ResponseEntity<String> addBook(@RequestBody CreateBookRequest createBookRequest) {
+        userService.SaveBook(createBookRequest);
         return ResponseEntity.ok("Book Added Successfully");
     }
 
